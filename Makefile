@@ -9,8 +9,8 @@ essentials:
 		curl \
 		exuberant-ctags \
 		flatpak \
-		git \
 		htop \
+		jq \
 		kleopatra \
 		meld \
 		pavucontrol \
@@ -19,6 +19,16 @@ essentials:
 		vim \
 		vim-gtk \
 		wget
+
+git:
+	sudo apt update
+	sudo apt install -y \
+		git
+	sudo pip install diff-highlight
+	git config --global pager.log 'diff-highlight | less'
+	git config --global pager.show 'diff-highlight | less'
+	git config --global pager.diff 'diff-highlight | less'
+	git config --global interactive.diffFilter diff-highlight
 
 vim:
 	sudo apt update
@@ -74,3 +84,31 @@ docker:
 	curl -fsSL https://get.docker.com -o get-docker.sh
 	DRY_RUN=1 sudo sh ./get-docker.sh
 	rm get-docker.sh
+
+codium:
+	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
+	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+	sudo apt update
+	sudo apt install -y codium
+
+telegram:
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	flatpak install flathub org.telegram.desktop
+
+dbeaver:
+	sudo  wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key
+	echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+	sudo apt-get update && sudo apt-get install dbeaver-ce
+
+adb:
+	sudo apt install adb
+	# git clone https://github.com/M0Rf30/android-udev-rules.git
+	cd ~/projects/android-udev-rules
+	sudo ln -sf "$PWD"/51-android.rules /etc/udev/rules.d/51-android.rules
+	sudo chmod a+r /etc/udev/rules.d/51-android.rules
+	sudo cp android-udev.conf /usr/lib/sysusers.d/
+	sudo systemd-sysusers
+	sudo gpasswd -a $(whoami) adbusers
+	sudo udevadm control --reload-rules
+	sudo systemctl restart systemd-udevd.service
+	adb kill-server

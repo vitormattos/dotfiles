@@ -11,4 +11,5 @@ keepassxc
 nextcloud-desktop
 obs
 docker
+codium
 ```
