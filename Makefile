@@ -17,7 +17,7 @@ essentials:
 		pulseaudio-module-bluetooth \
 		terminator \
 		vim \
-		vim-gtk \
+		vim-gtk3 \
 		wget
 
 git:
@@ -32,13 +32,7 @@ git:
 
 vim:
 	sudo apt update
-	sudo apt install exuberant-ctags vim-gtk
-
-codium:
-	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
-	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
-	sudo apt update
-	sudo apt install codium
+	sudo apt install exuberant-ctags vim-gtk3
 
 keepassxc:
 	cd ~/projects/keepassxc
@@ -69,11 +63,12 @@ keepassxc:
 		zlib1g-dev
 	cd build
 	cmake -DWITH_XC_ALL=ON ..
+	make -j $(nproc)
 	sudo make install
 
 nextcloud-desktop:
 	mkdir -p ~/.local/opt/Application/
-	curl -L `curl -s https://api.github.com/repos/nextcloud/desktop/releases/latest | jq -r ".assets[] | select(.name | test(\"x86_64\")) | .browser_download_url" | grep appimage` -o ~/.local/opt/Application/Nextcloud.appimage
+	curl -L `curl -s https://api.github.com/repos/nextcloud/desktop/releases/latest | jq -r ".assets[] | select(.name | test(\"x86_64\")) | .browser_download_url" | grep AppImage$` -o ~/.local/opt/Application/Nextcloud.appimage
 	chmod u+x ~/.local/opt/Application/Nextcloud.appimage
 
 obs:
@@ -108,7 +103,25 @@ adb:
 	sudo chmod a+r /etc/udev/rules.d/51-android.rules
 	sudo cp android-udev.conf /usr/lib/sysusers.d/
 	sudo systemd-sysusers
-	sudo gpasswd -a $(whoami) adbusers
+	sudo gpasswd -a $$USER adbusers
 	sudo udevadm control --reload-rules
 	sudo systemctl restart systemd-udevd.service
 	adb kill-server
+
+bashrc:
+	rm -f ~/.bashrc ~/.bash_aliases
+	ln -s ~/projects/linux-setup/.bashrc ~/.bashrc
+	ln -s ~/projects/linux-setup/.bash_aliases ~/.bash_aliases
+	source ~/.bashrc
+
+gestures:
+	@if [ ! -d ~/projects/libpinput-gestures ]; then \
+		git clone https://github.com/bulletmark/libinput-gestures ~/projects/libpinput-gestures; \
+	fi
+	sudo apt install python3 python3-gi meson xdotool libinput-tools gettext wmctrl
+	sudo ~/projects/libpinput-gestures/libinput-gestures-setup install
+	ln -s ~/projects/linux-setup/libinput-gestures.conf ~/.config/libinput-gestures.conf
+	sudo gpasswd -a $$USER input
+	libinput-gestures-setup autostart start
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
+	flatpak install flathub com.gitlab.cunidev.Gestures
