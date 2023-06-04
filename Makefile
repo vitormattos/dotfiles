@@ -30,10 +30,11 @@ git: # Setup git with small customizations
 	sudo apt install -y \
 		git
 	sudo pip install diff-highlight
+	git config --global alias.fpush "push --force-with-lease"
+	git config --global interactive.diffFilter diff-highlight
+	git config --global pager.diff 'diff-highlight | less'
 	git config --global pager.log 'diff-highlight | less'
 	git config --global pager.show 'diff-highlight | less'
-	git config --global pager.diff 'diff-highlight | less'
-	git config --global interactive.diffFilter diff-highlight
 
 vim: # Setup my vimrc
 	sudo apt update
