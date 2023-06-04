@@ -1,20 +1,32 @@
-# Setup environment
+# Setup dotfiles
 
-Use `make` to run any target:
+Use `make` without targets to list all the follow targets:
 
 ```
-appimage-launcher
-essentials
-vim
-codium
-keepassxc
-nextcloud-desktop
-obs
-docker
-codium
+adb: Install adb and setup udev rules
+appimage-launcher: Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages
+bashrc: My custom bashrc
+codium: Binary releases of VS Code without MS branding/telemetry/licensing
+dbeaver: Install dbeaver
+docker: Setup docker
+essentials: Essentials binaries
+gestures: My custom gestures
+git: Setup git with small customizations
+keepassxc: Setup keepassxc from source
+nextcloud-desktop: Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher
+obs-flatpak: Install OBS Studio from flatpak
+telegram-flatpak: Install Telegram from flatpak
+vim: Setup my vimrc
 ```
 
-Environments:
+To run a target use `make <target-name>`
+
+## Environments to makefile
+
 | Name          | Default value | Description                    |
 | ------------- | ------------- | ------------------------------ |
 | PROJECTS_PATH | ~/projects    | The path to store all projects |
+
+Example to rum make using an environment:
+
+PROJECTS_PATH=~/Projects make essentials

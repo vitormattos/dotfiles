@@ -1,11 +1,16 @@
 PROJECTS_PATH := $(if $(PROJECTS_PATH),$(PROJECTS_PATH),~/projects)
 
-appimage-launcher:
+default: help
+
+help:
+	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
+
+appimage-launcher: # Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages
 	curl -L `curl -s https://api.github.com/repos/TheAssassin/AppImageLauncher/releases/latest | jq -r ".assets[] | select(.name | test(\"bionic_amd64\")) | .browser_download_url"` -o appimage.deb
 	sudo dpkg -i appimage.deb
 	rm appimage.deb
 
-essentials:
+essentials: # Essentials binaries
 	sudo apt update
 	sudo apt install -y \
 		curl \
@@ -20,7 +25,7 @@ essentials:
 		terminator \
 		wget
 
-git:
+git: # Setup git with small customizations
 	sudo apt update
 	sudo apt install -y \
 		git
@@ -41,7 +46,7 @@ vim: # Setup my vimrc
 	fi
 	sh $(PROJECTS_PATH)/vimrc/./install.sh
 
-keepassxc:
+keepassxc: # Setup keepassxc from source
 	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
 		git clone https://github.com/keepassxreboot/keepassxc $(PROJECTS_PATH)/keepassxc; \
 		mkdir $(PROJECTS_PATH)/keepassxc/build; \
@@ -77,36 +82,36 @@ keepassxc:
 	make -j $(nproc)
 	sudo make install
 
-nextcloud-desktop:
+nextcloud-desktop: # Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher
 	mkdir -p ~/.local/opt/Application/
 	curl -L `curl -s https://api.github.com/repos/nextcloud/desktop/releases/latest | jq -r ".assets[] | select(.name | test(\"x86_64\")) | .browser_download_url" | grep AppImage$` -o ~/.local/opt/Application/Nextcloud.appimage
 	chmod u+x ~/.local/opt/Application/Nextcloud.appimage
 
-obs:
+obs-flatpak: # Install OBS Studio from flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak install flathub com.obsproject.Studio
 
-docker:
+docker: # Setup docker
 	curl -fsSL https://get.docker.com -o get-docker.sh
 	DRY_RUN=1 sudo sh ./get-docker.sh
 	rm get-docker.sh
 
-codium:
+codium: # Binary releases of VS Code without MS branding/telemetry/licensing
 	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
 	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
 	sudo apt update
 	sudo apt install -y codium
 
-telegram:
+telegram-flatpak: # Install Telegram from flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak install flathub org.telegram.desktop
 
-dbeaver:
+dbeaver: # Install dbeaver
 	sudo  wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key
 	echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
 	sudo apt-get update && sudo apt-get install dbeaver-ce
 
-adb:
+adb: # Install adb and setup udev rules
 	sudo apt install adb
 	@if [ ! -d $(PROJECTS_PATH)/android-udev-rules ]; then \
 		git clone https://github.com/M0Rf30/android-udev-rules.git $(PROJECTS_PATH)/android-udev-rules; \
@@ -121,13 +126,13 @@ adb:
 	sudo systemctl restart systemd-udevd.service
 	adb kill-server
 
-bashrc:
+bashrc: # My custom bashrc
 	rm -f ~/.bashrc ~/.bash_aliases
 	ln -s $(CURDIR)/.bashrc ~/.bashrc
 	ln -s $(CURDIR)/.bash_aliases ~/.bash_aliases
 	source ~/.bashrc
 
-gestures:
+gestures: # My custom gestures
 	@if [ ! -d $(PROJECTS_PATH)/libpinput-gestures ]; then \
 		git clone https://github.com/bulletmark/libinput-gestures $(PROJECTS_PATH)/libpinput-gestures; \
 	fi
