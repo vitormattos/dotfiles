@@ -2,22 +2,22 @@
 
 Use `make` without targets to list all the follow targets:
 
-```
-adb: Install adb and setup udev rules
-appimage-launcher: Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages
-bashrc: My custom bashrc
-codium: Binary releases of VS Code without MS branding/telemetry/licensing
-dbeaver: Install dbeaver
-docker: Setup docker
-essentials: Essentials binaries
-gestures: My custom gestures
-git: Setup git with small customizations
-keepassxc: Setup keepassxc from source
-nextcloud-desktop: Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher
-obs-flatpak: Install OBS Studio from flatpak
-telegram-flatpak: Install Telegram from flatpak
-vim: Setup my vimrc
-```
+| Target              | Description                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `adb`               | Install adb and setup udev rules                                                                                    |
+| `appimage-launcher` | Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages |
+| `bashrc`            | My custom bashrc                                                                                                    |
+| `codium`            | Binary releases of VS Code without MS branding/telemetry/licensing                                                  |
+| `dbeaver`           | Install dbeaver                                                                                                     |
+| `docker`            | Setup docker                                                                                                        |
+| `essentials`        | Essentials binaries                                                                                                 |
+| `gestures`          | My custom gestures                                                                                                  |
+| `git`               | Setup git with small customizations                                                                                 |
+| `keepassxc`         | Setup keepassxc from source                                                                                         |
+| `nextcloud-desktop` | Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher                                 |
+| `obs-flatpak`       | Install OBS Studio from flatpak                                                                                     |
+| `telegram-flatpak`  | Install Telegram from flatpak                                                                                       |
+| `vim`               | Setup my vimrc                                                                                                      |
 
 To run a target use `make <target-name>`
 
@@ -25,8 +25,10 @@ To run a target use `make <target-name>`
 
 | Name          | Default value | Description                    |
 | ------------- | ------------- | ------------------------------ |
-| PROJECTS_PATH | ~/projects    | The path to store all projects |
+| `PROJECTS_PATH` | `~/projects`    | The path to store all projects |
 
 Example to rum make using an environment:
 
+```bash
 PROJECTS_PATH=~/Projects make essentials
+```
