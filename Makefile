@@ -18,8 +18,6 @@ essentials:
 		pavucontrol \
 		pulseaudio-module-bluetooth \
 		terminator \
-		vim \
-		vim-gtk3 \
 		wget
 
 git:
@@ -32,9 +30,16 @@ git:
 	git config --global pager.diff 'diff-highlight | less'
 	git config --global interactive.diffFilter diff-highlight
 
-vim:
+vim: # Setup my vimrc
 	sudo apt update
-	sudo apt install exuberant-ctags vim-gtk3
+	sudo apt install -y \
+		exuberant-ctags \
+		vim \
+		vim-gtk3
+	@if [ ! -d $(PROJECTS_PATH)/vimrc ]; then \
+		git clone https://github.com/vitormattos/vimrc.git $(PROJECTS_PATH)/vimrc; \
+	fi
+	sh $(PROJECTS_PATH)/vimrc/./install.sh
 
 keepassxc:
 	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
