@@ -1,3 +1,5 @@
+PROJECTS_PATH := $(if $(PROJECTS_PATH),$(PROJECTS_PATH),~/projects)
+
 appimage-launcher:
 	curl -L `curl -s https://api.github.com/repos/TheAssassin/AppImageLauncher/releases/latest | jq -r ".assets[] | select(.name | test(\"bionic_amd64\")) | .browser_download_url"` -o appimage.deb
 	sudo dpkg -i appimage.deb
@@ -35,11 +37,11 @@ vim:
 	sudo apt install exuberant-ctags vim-gtk3
 
 keepassxc:
-	@if [ ! -d ~/projects/keepassxc ]; then \
-		git clone https://github.com/keepassxreboot/keepassxc ~/projects/keepassxc; \
-		mkdir ~/projects/keepassxc/build; \
+	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
+		git clone https://github.com/keepassxreboot/keepassxc $(PROJECTS_PATH)/keepassxc; \
+		mkdir $(PROJECTS_PATH)/keepassxc/build; \
 	fi
-	cd ~/projects/keepassxc
+	cd $(PROJECTS_PATH)/keepassxc
 	sudo apt update
 	sudo apt install -y \
 		asciidoctor \
@@ -101,10 +103,10 @@ dbeaver:
 
 adb:
 	sudo apt install adb
-	@if [ ! -d ~/projects/android-udev-rules ]; then \
-		git clone https://github.com/M0Rf30/android-udev-rules.git ~/projects/android-udev-rules; \
+	@if [ ! -d $(PROJECTS_PATH)/android-udev-rules ]; then \
+		git clone https://github.com/M0Rf30/android-udev-rules.git $(PROJECTS_PATH)/android-udev-rules; \
 	fi
-	cd ~/projects/android-udev-rules
+	cd $(PROJECTS_PATH)/android-udev-rules
 	sudo ln -sf "$PWD"/51-android.rules /etc/udev/rules.d/51-android.rules
 	sudo chmod a+r /etc/udev/rules.d/51-android.rules
 	sudo cp android-udev.conf /usr/lib/sysusers.d/
@@ -116,17 +118,17 @@ adb:
 
 bashrc:
 	rm -f ~/.bashrc ~/.bash_aliases
-	ln -s ~/projects/linux-setup/.bashrc ~/.bashrc
-	ln -s ~/projects/linux-setup/.bash_aliases ~/.bash_aliases
+	ln -s $(CURDIR)/.bashrc ~/.bashrc
+	ln -s $(CURDIR)/.bash_aliases ~/.bash_aliases
 	source ~/.bashrc
 
 gestures:
-	@if [ ! -d ~/projects/libpinput-gestures ]; then \
-		git clone https://github.com/bulletmark/libinput-gestures ~/projects/libpinput-gestures; \
+	@if [ ! -d $(PROJECTS_PATH)/libpinput-gestures ]; then \
+		git clone https://github.com/bulletmark/libinput-gestures $(PROJECTS_PATH)/libpinput-gestures; \
 	fi
 	sudo apt install python3 python3-gi meson xdotool libinput-tools gettext wmctrl
-	sudo ~/projects/libpinput-gestures/libinput-gestures-setup install
-	ln -s ~/projects/linux-setup/libinput-gestures.conf ~/.config/libinput-gestures.conf
+	sudo $(PROJECTS_PATH)/libpinput-gestures/libinput-gestures-setup install
+	ln -s $(CURDIR)/libinput-gestures.conf ~/.config/libinput-gestures.conf
 	sudo gpasswd -a $$USER input
 	libinput-gestures-setup autostart start
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
