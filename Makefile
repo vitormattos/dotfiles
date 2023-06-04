@@ -35,6 +35,10 @@ vim:
 	sudo apt install exuberant-ctags vim-gtk3
 
 keepassxc:
+	@if [ ! -d ~/projects/keepassxc ]; then \
+		git clone https://github.com/keepassxreboot/keepassxc ~/projects/keepassxc; \
+		mkdir ~/projects/keepassxc/build; \
+	fi
 	cd ~/projects/keepassxc
 	sudo apt update
 	sudo apt install -y \
@@ -97,7 +101,9 @@ dbeaver:
 
 adb:
 	sudo apt install adb
-	# git clone https://github.com/M0Rf30/android-udev-rules.git
+	@if [ ! -d ~/projects/android-udev-rules ]; then \
+		git clone https://github.com/M0Rf30/android-udev-rules.git ~/projects/android-udev-rules; \
+	fi
 	cd ~/projects/android-udev-rules
 	sudo ln -sf "$PWD"/51-android.rules /etc/udev/rules.d/51-android.rules
 	sudo chmod a+r /etc/udev/rules.d/51-android.rules
