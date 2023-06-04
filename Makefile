@@ -49,7 +49,7 @@ vim: # Setup my vimrc
 keepassxc: # Setup keepassxc from source
 	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
 		git clone https://github.com/keepassxreboot/keepassxc $(PROJECTS_PATH)/keepassxc; \
-		mkdir $(PROJECTS_PATH)/keepassxc/build; \
+		mkdir -p $(PROJECTS_PATH)/keepassxc/build; \
 	fi
 	cd $(PROJECTS_PATH)/keepassxc
 	sudo apt update
@@ -143,3 +143,9 @@ gestures: # My custom gestures
 	libinput-gestures-setup autostart start
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
 	flatpak install flathub com.gitlab.cunidev.Gestures
+
+act: # Run your GitHub Actions locally
+	mkdir -p $(PROJECTS_PATH)/act
+	wget -O $(PROJECTS_PATH)/act/install.sh https://raw.githubusercontent.com/nektos/act/master/install.sh
+	mkdir -p ~/.local/opt/bin
+	sh $(PROJECTS_PATH)/act/install.sh -b ~/.local/opt/bin

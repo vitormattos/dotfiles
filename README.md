@@ -4,6 +4,7 @@ Use `make` without targets to list all the follow targets:
 
 | Target              | Description                                                                                                         |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `act`               | Run your GitHub Actions locally                                                                                     |
 | `adb`               | Install adb and setup udev rules                                                                                    |
 | `appimage-launcher` | Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages |
 | `bashrc`            | My custom bashrc                                                                                                    |
@@ -23,9 +24,9 @@ To run a target use `make <target-name>`
 
 ## Environments to makefile
 
-| Name          | Default value | Description                    |
-| ------------- | ------------- | ------------------------------ |
-| `PROJECTS_PATH` | `~/projects`    | The path to store all projects |
+| Name            | Default value | Description                    |
+| --------------- | ------------- | ------------------------------ |
+| `PROJECTS_PATH` | `~/projects`  | The path to store all projects |
 
 Example to rum make using an environment:
 
