@@ -17,6 +17,7 @@ Use `make` without targets to list all the follow targets:
 | `keepassxc`         | Setup keepassxc from source                                                                                         |
 | `nextcloud-desktop` | Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher                                 |
 | `obs-flatpak`       | Install OBS Studio from flatpak                                                                                     |
+| `slim`              | Slim(toolkit): Don't change anything in your container image and minify it by up to 30x making it secure too!       |
 | `telegram-flatpak`  | Install Telegram from flatpak                                                                                       |
 | `vim`               | Setup my vimrc                                                                                                      |
 
