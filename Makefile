@@ -14,7 +14,6 @@ essentials: # Essentials binaries
 	sudo apt update
 	sudo apt install -y \
 		curl \
-		exuberant-ctags \
 		flatpak \
 		htop \
 		jq \
