@@ -18,12 +18,19 @@ essentials: # Essentials binaries
 		flatpak \
 		htop \
 		jq \
-		kleopatra \
 		meld \
 		pavucontrol \
 		pulseaudio-module-bluetooth \
 		terminator \
 		wget
+
+gpg: # Setup essentials to sign git commits and configure
+	@read -p "Type your GPG signing key: " signingkey; \
+	sudo apt update; \
+	sudo apt install -y \
+		kleopatra \
+		scdaemon; \
+	git config --global user.signingkey $${signingkey}
 
 git: # Setup git with small customizations
 	sudo apt update
