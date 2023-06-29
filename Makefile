@@ -29,7 +29,8 @@ gpg: # Setup essentials to sign git commits and configure
 	sudo apt install -y \
 		kleopatra \
 		scdaemon; \
-	git config --global user.signingkey $${signingkey}
+	git config --global user.signingkey $${signingkey} \
+	git config commit.gpgsign true
 
 git: # Setup git with small customizations
 	sudo apt update
