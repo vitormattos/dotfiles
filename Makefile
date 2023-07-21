@@ -1,4 +1,5 @@
 PROJECTS_PATH := $(if $(PROJECTS_PATH),$(PROJECTS_PATH),~/projects)
+SHELL := /bin/bash
 
 default: help
 
@@ -135,10 +136,15 @@ adb: # Install adb and setup udev rules
 	adb kill-server
 
 bashrc: # My custom bashrc
-	rm -f ~/.bashrc ~/.bash_aliases
-	ln -s $(CURDIR)/.bashrc ~/.bashrc
-	ln -s $(CURDIR)/.bash_aliases ~/.bash_aliases
-	source ~/.bashrc
+	@if [ -f ~/.bashrc ]; then \
+		rm -f ~/.bashrc; \
+	fi;
+	@if [ -f ~/.bash_aliases ]; then \
+		rm -f ~/.bash_aliases; \
+	fi;
+	ln -s $(CURDIR)/assets/bashrc/.bashrc ~/.bashrc
+	ln -s $(CURDIR)/assets/bashrc/.bash_aliases ~/.bash_aliases
+	@echo "Run the command source ~/.bashrc or restart your terminal"
 
 gestures: # My custom gestures
 	@if [ ! -d $(PROJECTS_PATH)/libpinput-gestures ]; then \
@@ -146,7 +152,7 @@ gestures: # My custom gestures
 	fi
 	sudo apt install python3 python3-gi meson xdotool libinput-tools gettext wmctrl
 	sudo $(PROJECTS_PATH)/libpinput-gestures/libinput-gestures-setup install
-	ln -s $(CURDIR)/libinput-gestures.conf ~/.config/libinput-gestures.conf
+	ln -s $(CURDIR)/assets/gestures/libinput-gestures.conf ~/.config/libinput-gestures.conf
 	sudo gpasswd -a $$USER input
 	libinput-gestures-setup autostart start
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
