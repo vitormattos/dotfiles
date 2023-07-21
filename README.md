@@ -12,6 +12,7 @@ Use `make` without targets to list all the follow targets:
 | `dbeaver`           | Install dbeaver                                                                                                     |
 | `docker`            | Setup docker                                                                                                        |
 | `essentials`        | Essentials binaries                                                                                                 |
+| `firefox-developer` | Firefox developer edition                                                                                           |
 | `gestures`          | My custom gestures                                                                                                  |
 | `git`               | Setup git with small customizations                                                                                 |
 | `gpg`               | Setup essentials to sign git commits and configure                                                                  |
