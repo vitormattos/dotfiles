@@ -173,6 +173,12 @@ firefox-developer: # Firefox developer edition
 	fi
 	rm firefox.tar.bz2
 
+youtube-dl: # A youtube-dl fork with additional features and fixes
+	# Reference: https://github.com/yt-dlp/yt-dlp/wiki/Installation#apt
+	sudo add-apt-repository ppa:tomtomtom/yt-dlp    # Add ppa repo to apt
+	sudo apt update                                 # Update package list
+	sudo apt install yt-dlp                         # Install yt-dlp
+
 act: # Run your GitHub Actions locally
 	mkdir -p $(PROJECTS_PATH)/act
 	wget -O $(PROJECTS_PATH)/act/install.sh https://raw.githubusercontent.com/nektos/act/master/install.sh
