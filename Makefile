@@ -158,6 +158,21 @@ gestures: # My custom gestures
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
 	flatpak install flathub com.gitlab.cunidev.Gestures
 
+firefox-developer: # Firefox developer edition
+	mkdir -p ~/.local/opt
+	curl -fSL --progress-bar "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o firefox.tar.bz2
+	@if [ -d ~/.local/opt/bin/firefox-developer ]; then \
+		rm -rf ~/.local/opt/bin/firefox-developer; \
+	fi
+	tar -xvf firefox.tar.bz2 -C ~/.local/opt/
+	@if [ ! -f ~/.local/opt/bin/firefox-developer ]; then \
+		ln -s ~/.local/opt/firefox/firefox ~/.local/opt/bin/firefox-developer; \
+	fi
+	@if [ ! -f ~/.local/share/applications/firefox_dev.desktop ]; then \
+		ln -s $(CURDIR)/assets/firefox-developer/firefox_dev.desktop ~/.local/share/applications/; \
+	fi
+	rm firefox.tar.bz2
+
 act: # Run your GitHub Actions locally
 	mkdir -p $(PROJECTS_PATH)/act
 	wget -O $(PROJECTS_PATH)/act/install.sh https://raw.githubusercontent.com/nektos/act/master/install.sh
