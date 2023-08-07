@@ -98,7 +98,7 @@ keepassxc-develop: # Setup keepassxc from source
 
 nextcloud-desktop: # Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher
 	mkdir -p ~/.local/opt/Application/
-	curl -L `curl -s https://api.github.com/repos/nextcloud/desktop/releases/latest | jq -r ".assets[] | select(.name | test(\"x86_64\")) | .browser_download_url" | grep AppImage$` -o ~/.local/opt/Application/Nextcloud.appimage
+	curl -L `curl -s https://api.github.com/repos/nextcloud-releases/desktop/releases/latest | jq -r ".assets[] | select(.name | test(\"x86_64\")) | .browser_download_url" | grep AppImage$` -o ~/.local/opt/Application/Nextcloud.appimage
 	chmod u+x ~/.local/opt/Application/Nextcloud.appimage
 
 obs-flatpak: # Install OBS Studio from flatpak
