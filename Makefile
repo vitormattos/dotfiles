@@ -120,6 +120,21 @@ telegram-flatpak: # Install Telegram from flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak install flathub org.telegram.desktop
 
+telegram: # Telegram oficial
+	curl -fSL --progress-bar https://telegram.org/dl/desktop/linux -o linux.tar.xz
+	@if [ -d ~/.local/opt/bin/telegram ]; then \
+		rm -rf ~/.local/opt/bin/telegram; \
+	fi
+	tar -xvf linux.tar.xz -C ~/.local/opt/
+	@if [ ! -f ~/.local/opt/bin/telegram ]; then \
+		ln -s ~/.local/opt/Telegram/Telegram ~/.local/opt/bin/telegram; \
+	fi
+	chmod +x ~/.local/opt/bin/telegram
+	@if [ ! -f ~/.local/share/applications/telegram.desktop ]; then \
+		ln -s $(CURDIR)/assets/telegram/telegram.desktop ~/.local/share/applications/; \
+	fi
+	rm linux.tar.xz
+
 dbeaver: # Install dbeaver
 	sudo  wget -O /usr/share/keyrings/dbeaver.gpg.key https://dbeaver.io/debs/dbeaver.gpg.key
 	echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
