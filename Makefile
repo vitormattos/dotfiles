@@ -55,7 +55,12 @@ vim: # Setup my vimrc
 	fi
 	sh $(PROJECTS_PATH)/vimrc/./install.sh
 
-keepassxc: # Setup keepassxc from source
+keepassxc: # Setup keepassxc
+	sudo add-apt-repository ppa:phoerious/keepassxc
+	sudo apt update
+	sudo apt install -y keepassxc
+
+keepassxc-develop: # Setup keepassxc from source
 	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
 		git clone https://github.com/keepassxreboot/keepassxc $(PROJECTS_PATH)/keepassxc; \
 		mkdir -p $(PROJECTS_PATH)/keepassxc/build; \
