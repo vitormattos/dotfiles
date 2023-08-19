@@ -1,5 +1,9 @@
 # Setup dotfiles
 
+For a long time, every time I needed to format my notebook I had to configure my entire working environment after formatting, installing and adjusting all the systems I use on a daily basis (or I think I use them). I saw that this work was always thrown away and redone with each new setup, so I decided to automate the manual actions so as not to lose them.
+
+## How to use
+
 Use `make` without targets to list all the follow targets:
 
 | Target              | Description                                                                                                         |
