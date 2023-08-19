@@ -181,12 +181,15 @@ gestures: # My custom gestures
 firefox-developer: # Firefox developer edition
 	mkdir -p ~/.local/opt
 	curl -fSL --progress-bar "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o firefox.tar.bz2
-	@if [ -d ~/.local/opt/bin/firefox-developer ]; then \
-		rm -rf ~/.local/opt/bin/firefox-developer; \
+	@if [ -d ~/.local/opt/firefox-developer ]; then \
+		rm -rf ~/.local/opt/firefox-developer; \
 	fi
-	tar -xvf firefox.tar.bz2 -C ~/.local/opt/
+	mkdir -p ~/.local/opt/firefox-developer-tmp
+	tar -xvf firefox.tar.bz2 -C ~/.local/opt/firefox-developer-tmp
+	mv ~/.local/opt/firefox-developer-tmp/firefox ~/.local/opt/firefox-developer/
+	rm -rf ~/.local/opt/firefox-developer-tmp/
 	@if [ ! -f ~/.local/opt/bin/firefox-developer ]; then \
-		ln -s ~/.local/opt/firefox/firefox ~/.local/opt/bin/firefox-developer; \
+		ln -s ~/.local/opt/firefox-developer/firefox ~/.local/opt/bin/firefox-developer; \
 	fi
 	@if [ ! -f ~/.local/share/applications/firefox_dev.desktop ]; then \
 		ln -s $(CURDIR)/assets/firefox-developer/firefox_dev.desktop ~/.local/share/applications/; \
