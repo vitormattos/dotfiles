@@ -1,10 +1,16 @@
 [Desktop Entry]
-Name=Firefox Developer 
-GenericName=Firefox Developer Edition
-Exec=~/.local/bin/firefox-developer %u
-Terminal=false
-Icon=~/.local/opt/firefox/browser/chrome/icons/default/default128.png
-Type=Application
 Categories=Application;Network;X-Developer;
+Comment[en_US]=Firefox Developer Edition Web Browser.
 Comment=Firefox Developer Edition Web Browser.
-StartupWMClass=Firefox Developer Edition
+Exec=firefox-developer %u
+GenericName[en_US]=Firefox Developer Edition
+GenericName=Firefox Developer Edition
+Icon=~/.local/opt/firefox-developer/browser/chrome/icons/default/default128.png
+MimeType=
+Name[en_US]=Firefox Developer
+Name=Firefox Developer
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
