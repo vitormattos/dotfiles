@@ -140,8 +140,9 @@ dbeaver: # Install dbeaver
 	echo "deb [signed-by=/usr/share/keyrings/dbeaver.gpg.key] https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
 	sudo apt-get update && sudo apt-get install dbeaver-ce
 
-adb: # Install adb and setup udev rules
-	sudo apt install adb
+adb: # Install adb
+	bash <(curl -s https://raw.githubusercontent.com/corbindavenport/nexus-tools/main/install.sh)
+udev: adb # Install udev rules
 	@if [ ! -d $(PROJECTS_PATH)/android-udev-rules ]; then \
 		git clone https://github.com/M0Rf30/android-udev-rules.git $(PROJECTS_PATH)/android-udev-rules; \
 	fi
