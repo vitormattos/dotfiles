@@ -222,7 +222,7 @@ act: # Run your GitHub Actions locally
 	mkdir -p ~/.local/opt/bin
 	sh $(PROJECTS_PATH)/act/install.sh -b ~/.local/opt/bin
 
-slim: # Slim(toolkit): Don't change anything in your container image and minify it by up to 30x making it secure too!
+slim: # Slim(toolkit). Don't change anything in your container image and minify it by up to 30x making it secure too!
 	curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
 
 insomnia:
