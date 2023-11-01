@@ -116,6 +116,17 @@ codium: # Binary releases of VS Code without MS branding/telemetry/licensing
 	sudo apt update
 	sudo apt install -y codium
 
+vscode: # VS Code
+	sudo apt-get install wget gpg
+	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+	sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+	rm -f packages.microsoft.gpg
+	sudo apt-get update
+	sudo apt install apt-transport-https
+	sudo apt update
+	sudo apt install code
+
 telegram-flatpak: # Install Telegram from flatpak
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	flatpak install flathub org.telegram.desktop
@@ -149,7 +160,7 @@ udev: adb # Install udev rules
 		git clone https://github.com/M0Rf30/android-udev-rules.git $(PROJECTS_PATH)/android-udev-rules; \
 	fi
 	cd $(PROJECTS_PATH)/android-udev-rules
-	sudo ln -sf "$PWD"/51-android.rules /etc/udev/rules.d/51-android.rules
+	sudo ln -sf $(PROJECTS_PATH)/android-udev-rules/51-android.rules /etc/udev/rules.d/51-android.rules
 	sudo chmod a+r /etc/udev/rules.d/51-android.rules
 	sudo cp android-udev.conf /usr/lib/sysusers.d/
 	sudo systemd-sysusers
@@ -211,7 +222,7 @@ act: # Run your GitHub Actions locally
 	mkdir -p ~/.local/opt/bin
 	sh $(PROJECTS_PATH)/act/install.sh -b ~/.local/opt/bin
 
-slim: # Slim(toolkit): Don't change anything in your container image and minify it by up to 30x making it secure too!
+slim: # Slim(toolkit). Don't change anything in your container image and minify it by up to 30x making it secure too!
 	curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
 
 insomnia:
