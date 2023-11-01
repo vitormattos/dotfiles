@@ -160,7 +160,7 @@ udev: adb # Install udev rules
 		git clone https://github.com/M0Rf30/android-udev-rules.git $(PROJECTS_PATH)/android-udev-rules; \
 	fi
 	cd $(PROJECTS_PATH)/android-udev-rules
-	sudo ln -sf "$PWD"/51-android.rules /etc/udev/rules.d/51-android.rules
+	sudo ln -sf $(PROJECTS_PATH)/android-udev-rules/51-android.rules /etc/udev/rules.d/51-android.rules
 	sudo chmod a+r /etc/udev/rules.d/51-android.rules
 	sudo cp android-udev.conf /usr/lib/sysusers.d/
 	sudo systemd-sysusers
