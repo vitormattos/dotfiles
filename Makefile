@@ -210,6 +210,21 @@ firefox-developer: # Firefox developer edition
 	fi
 	rm firefox.tar.bz2
 
+onlyoffice-desktop: # ONLYOFFICE Desktop
+# Source: https://helpcenter.onlyoffice.com/installation/desktop-install-ubuntu.aspx
+# Add GPG key
+	mkdir -p -m 700 ~/.gnupg
+	gpg --no-default-keyring --keyring gnupg-ring:/tmp/onlyoffice.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5
+	chmod 644 /tmp/onlyoffice.gpg
+	sudo chown root:root /tmp/onlyoffice.gpg
+	sudo mv /tmp/onlyoffice.gpg /usr/share/keyrings/onlyoffice.gpg
+# Add desktop editors repository
+	echo 'deb [signed-by=/usr/share/keyrings/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main' | sudo tee -a /etc/apt/sources.list.d/onlyoffice.list
+# Update the package manager cache:
+	sudo apt-get update
+# Now the editors can be easily installed using the following command:
+	sudo apt-get install onlyoffice-desktopeditors
+
 youtube-dl: # A youtube-dl fork with additional features and fixes
 	# Reference: https://github.com/yt-dlp/yt-dlp/wiki/Installation#apt
 	sudo add-apt-repository ppa:tomtomtom/yt-dlp    # Add ppa repo to apt
