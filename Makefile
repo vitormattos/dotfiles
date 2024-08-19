@@ -203,6 +203,13 @@ gestures: # My custom gestures
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
 	flatpak install flathub com.gitlab.cunidev.Gestures
 
+firefox: # Firefox without ppa
+# Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
+	sudo mkdir -p /etc/apt/keyrings
+	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+	echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
+	echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000"| sudo tee /etc/apt/preferences.d/mozilla
+
 firefox-developer: # Firefox developer edition
 	mkdir -p ~/.local/opt
 	curl -fSL --progress-bar "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o firefox.tar.bz2
