@@ -44,7 +44,7 @@ git: # Setup git with small customizations
 	git config --global pager.log 'diff-highlight | less'
 	git config --global pager.show 'diff-highlight | less'
 
-github-cli:
+github-cli: # Work seamlessly with GitHub from the command line
 	(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
 	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
 	&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
