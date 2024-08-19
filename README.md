@@ -19,6 +19,7 @@ Use `make` without targets to list all the follow targets:
 | firefox-developer  | Firefox developer edition                                                                                           |
 | firefox            | Firefox without ppa                                                                                                 |
 | gestures           | My custom gestures                                                                                                  |
+| github-cli         | Work seamlessly with GitHub from the command line                                                                   |
 | git                | Setup git with small customizations                                                                                 |
 | gpg                | Setup essentials to sign git commits and configure                                                                  |
 | insomnia           | Insomnia API client                                                                                                 |
