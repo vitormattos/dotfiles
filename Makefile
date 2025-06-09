@@ -253,6 +253,12 @@ onlyoffice-desktop: # ONLYOFFICE Desktop
 # Now the editors can be easily installed using the following command:
 	sudo apt-get install onlyoffice-desktopeditors
 
+scrcpy: # Android screen mirroring and control
+	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
+		git clone https://github.com/Genymobile/scrcpy $(PROJECTS_PATH)/scrcpy; \
+	fi
+	sh ${PROJECTS_PATH}/scrcpy/./install_release.sh
+
 youtube-dl: # A youtube-dl fork with additional features and fixes
 	# Reference: https://github.com/yt-dlp/yt-dlp/wiki/Installation#apt
 	sudo add-apt-repository ppa:tomtomtom/yt-dlp    # Add ppa repo to apt
