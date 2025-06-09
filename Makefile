@@ -258,6 +258,7 @@ scrcpy: # Android screen mirroring and control
 		git clone https://github.com/Genymobile/scrcpy $(PROJECTS_PATH)/scrcpy; \
 	fi
 	sudo apt update
+	sudo apt install ffmpeg libsdl2-2.0-0 adb libusb-1.0-0
 	sudo apt install gcc git pkg-config meson ninja-build libsdl2-dev \
                  libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
                  libswresample-dev libusb-1.0-0-dev
