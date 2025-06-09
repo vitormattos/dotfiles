@@ -179,6 +179,17 @@ udev: adb # Install udev rules
 	sudo systemctl restart systemd-udevd.service
 	adb kill-server
 
+piper: # Piper - text speech
+# source: https://bigattichouse.medium.com/piper-cli-llm-text-to-speech-on-ubuntu-0e7834720bb0
+	@if [ ! -d $(PROJECTS_PATH)/piper ]; then \
+		mkdir $(PROJECTS_PATH)/piper; \
+		git clone https://github.com/rhasspy/piper $(PROJECTS_PATH)/piper/piper; \
+		git clone https://github.com/rhasspy/piper-phonemize $(PROJECTS_PATH)/piper/piper-phonemize; \
+	fi
+	cd $(PROJECTS_PATH)/piper/piper-phonemize && make && cd build && sudo make install
+	cd $(PROJECTS_PATH)/piper/piper/ && make
+	cp $(PROJECTS_PATH)/piper/piper/build/piper ../
+
 bashrc: # My custom bashrc
 	@if [ -f ~/.bashrc ]; then \
 		rm -f ~/.bashrc; \
