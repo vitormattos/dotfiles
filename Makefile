@@ -146,13 +146,13 @@ telegram: # Telegram oficial
 	@if [ -d ~/.local/opt/bin/telegram ]; then \
 		rm -rf ~/.local/opt/bin/telegram; \
 	fi
-	mkdir -p ~/.local/opt/
+	mkdir -p ~/.local/opt/bin/
 	tar -xvf linux.tar.xz -C ~/.local/opt/
 	@if [ ! -f ~/.local/opt/bin/telegram ]; then \
 		ln -s ~/.local/opt/Telegram/Telegram ~/.local/opt/bin/telegram; \
 	fi
-	mkdir -p ~/.local/opt/bin/
 	chmod +x ~/.local/opt/bin/telegram
+	mkdir -p ~/.local/share/applications/
 	@if [ ! -f ~/.local/share/applications/telegram.desktop ]; then \
 		ln -s $(CURDIR)/assets/telegram/telegram.desktop ~/.local/share/applications/; \
 	fi
