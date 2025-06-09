@@ -28,6 +28,7 @@ Use `make` without targets to list all the follow targets:
 | nextcloud-desktop  | Desktop sync client for Nextcloud. Will be good to run the target appimage-launcher                                 |
 | obs-flatpak        | Install OBS Studio from flatpak                                                                                     |
 | onlyoffice-desktop | ONLYOFFICE Desktop                                                                                                  |
+| piper              | Piper - text speech                                                                                                 |
 | slim               | Slim(toolkit). Don't change anything in your container image and minify it by up to 30x making it secure too!       |
 | telegram-flatpak   | Install Telegram from flatpak                                                                                       |
 | telegram           | Telegram oficial                                                                                                    |
