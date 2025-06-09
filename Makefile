@@ -37,12 +37,11 @@ git: # Setup git with small customizations
 	sudo apt update
 	sudo apt install -y \
 		git
-	sudo pip install diff-highlight
+	sudo apt install git-delta
 	git config --global alias.fpush "push --force-with-lease"
-	git config --global interactive.diffFilter diff-highlight
-	git config --global pager.diff 'diff-highlight | less'
-	git config --global pager.log 'diff-highlight | less'
-	git config --global pager.show 'diff-highlight | less'
+	git config --global interactive.diffFilter delta --color-only
+	git config --global delta.navigate true
+	git config --global merge.conflictstyle zdiff3
 
 github-cli: # Work seamlessly with GitHub from the command line
 	(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
