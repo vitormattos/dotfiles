@@ -262,7 +262,8 @@ scrcpy: # Android screen mirroring and control
 	sudo apt install gcc git pkg-config meson ninja-build libsdl2-dev \
                  libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
                  libswresample-dev libusb-1.0-0-dev
-	sh ${PROJECTS_PATH}/scrcpy/./install_release.sh
+	cd $(PROJECTS_PATH)/scrcpy
+	sh ./install_release.sh
 
 youtube-dl: # A youtube-dl fork with additional features and fixes
 	# Reference: https://github.com/yt-dlp/yt-dlp/wiki/Installation#apt
