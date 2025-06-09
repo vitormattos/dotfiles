@@ -254,7 +254,7 @@ onlyoffice-desktop: # ONLYOFFICE Desktop
 	sudo apt-get install onlyoffice-desktopeditors
 
 scrcpy: # Android screen mirroring and control
-	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
+	@if [ ! -d $(PROJECTS_PATH)/scrcpy ]; then \
 		git clone https://github.com/Genymobile/scrcpy $(PROJECTS_PATH)/scrcpy; \
 	fi
 	sh ${PROJECTS_PATH}/scrcpy/./install_release.sh
