@@ -258,7 +258,11 @@ act: # Run your GitHub Actions locally
 slim: # Slim(toolkit). Don't change anything in your container image and minify it by up to 30x making it secure too!
 	curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
 
-insomnia: # Insomnia API client
+stoplight:
+	mkdir -p ~/.local/opt/Application/
+	curl -L `curl -s https://api.github.com/repos/stoplightio/studio/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url"|grep x86` -o ~/.local/opt/Application/stoplight.AppImage
+
+insomnia:
 	mkdir -p ~/.local/opt/Application/
 	curl -L `curl -s https://api.github.com/repos/Kong/insomnia/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url"` -o ~/.local/opt/Application/insomnia.appimage
 	chmod u+x ~/.local/opt/Application/insomnia.appimage
