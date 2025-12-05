@@ -7,7 +7,7 @@ help:
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
 appimage-launcher: # Helper application for Linux distributions serving as a kind of "entry point" for running and integrating AppImages
-	curl -L `curl -s https://api.github.com/repos/TheAssassin/AppImageLauncher/releases/latest | jq -r ".assets[] | select(.name | test(\"bionic_amd64\")) | .browser_download_url"` -o appimage.deb
+	curl -L $$(curl -s https://api.github.com/repos/TheAssassin/AppImageLauncher/releases/latest | jq -r '.assets[] | select(.name | test("_amd64.deb$$")) | .browser_download_url') -o appimage.deb
 	sudo dpkg -i appimage.deb
 	rm appimage.deb
 
@@ -282,9 +282,9 @@ slim: # Slim(toolkit). Don't change anything in your container image and minify 
 
 stoplight:
 	mkdir -p ~/.local/opt/Application/
-	curl -L `curl -s https://api.github.com/repos/stoplightio/studio/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url"|grep x86` -o ~/.local/opt/Application/stoplight.AppImage
+	curl -L $$(curl -s https://api.github.com/repos/stoplightio/studio/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url"|grep x86) -o ~/.local/opt/Application/stoplight.AppImage
 
 insomnia:
 	mkdir -p ~/.local/opt/Application/
-	curl -L `curl -s https://api.github.com/repos/Kong/insomnia/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url"` -o ~/.local/opt/Application/insomnia.appimage
+	curl -L $$(curl -s https://api.github.com/repos/Kong/insomnia/releases/latest | jq -r ".assets[] | select(.name | test(\"AppImage\")) | .browser_download_url") -o ~/.local/opt/Application/insomnia.appimage
 	chmod u+x ~/.local/opt/Application/insomnia.appimage
