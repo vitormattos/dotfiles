@@ -219,6 +219,15 @@ firefox: # Firefox without ppa
 	echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
 	echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000"| sudo tee /etc/apt/preferences.d/mozilla
 
+opera: # Opera browser via apt repository
+# Source: https://www.ubuntuupdates.org/ppa/opera
+	sudo apt-get install -y wget gpg
+	sudo mkdir -p /etc/apt/keyrings
+	wget -qO- https://deb.opera.com/archive.key | gpg --dearmor | sudo tee /etc/apt/keyrings/opera.gpg > /dev/null
+	echo "deb [signed-by=/etc/apt/keyrings/opera.gpg] https://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list > /dev/null
+	sudo apt update
+	sudo apt install -y opera-stable
+
 firefox-developer: # Firefox developer edition
 	mkdir -p ~/.local/opt
 	curl -fSL --progress-bar "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o firefox.tar.bz2
