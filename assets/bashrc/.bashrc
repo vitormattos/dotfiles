@@ -147,3 +147,12 @@ export VSCODE_GALLERY_ITEM_URL='https://marketplace.visualstudio.com/items'
 export VSCODE_GALLERY_CONTROL_URL=''
 export VSCODE_GALLERY_RECOMMENDATIONS_URL=''
 
+
+# >>> bash_history managed block >>>
+# Keep a large, append-only history persisted across sessions.
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=1000000
+HISTFILESIZE=2000000
+PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND:-}"
+# <<< bash_history managed block <<<

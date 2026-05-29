@@ -30,14 +30,14 @@ gpg: # Setup essentials to sign git commits and configure
 	sudo apt install -y \
 		kleopatra \
 		scdaemon; \
-	git config --global user.signingkey $${signingkey} \
+	git config --global user.signingkey $${signingkey} && \
 	git config --global commit.gpgsign true
 
 git: # Setup git with small customizations
 	sudo apt update
 	sudo apt install -y \
 		git
-	sudo apt install git-delta
+	sudo apt install -y git-delta
 	git config --global alias.fpush "push --force-with-lease"
 	git config --global interactive.diffFilter delta --color-only
 	git config --global delta.navigate true
@@ -51,8 +51,6 @@ github-cli: # Work seamlessly with GitHub from the command line
 	&& echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
 	&& sudo apt update \
 	&& sudo apt install gh -y
-	sudo apt update
-	sudo apt install gh
 
 vim: # Setup my vimrc
 	sudo apt update
@@ -73,9 +71,8 @@ keepassxc: # Setup keepassxc
 keepassxc-develop: # Setup keepassxc from source
 	@if [ ! -d $(PROJECTS_PATH)/keepassxc ]; then \
 		git clone https://github.com/keepassxreboot/keepassxc $(PROJECTS_PATH)/keepassxc; \
-		mkdir -p $(PROJECTS_PATH)/keepassxc/build; \
 	fi
-	cd $(PROJECTS_PATH)/keepassxc
+	mkdir -p $(PROJECTS_PATH)/keepassxc/build
 	sudo apt update
 	sudo apt install -y \
 		asciidoctor \
@@ -83,11 +80,12 @@ keepassxc-develop: # Setup keepassxc from source
 		build-essential \
 		cmake \
 		libargon2-dev \
-		libbotan-2-dev \
+		libbotan-3-dev \
 		libdbus-glib-1-2 \
 		libminizip-dev \
 		libpcsclite-dev \
 		libqrencode-dev \
+		qt6-svg-dev \
 		libqt5svg5-dev \
 		libqt5x11extras5-dev \
 		libreadline-dev \
@@ -101,9 +99,10 @@ keepassxc-develop: # Setup keepassxc from source
 		qttools5-dev \
 		terminator \
 		zlib1g-dev
-	cd build
-	cmake -DWITH_XC_ALL=ON ..
-	make -j $(nproc)
+	cd $(PROJECTS_PATH)/keepassxc/build && \
+	rm -f CMakeCache.txt && rm -rf CMakeFiles && \
+	cmake .. && \
+	make -j $$(nproc) && \
 	sudo make install
 
 nextcloud-desktop: # Desktop sync client for Nextcloud
