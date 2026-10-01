@@ -216,6 +216,7 @@ firefox: # Firefox DEB from Mozilla APT repository (no Snap)
 # Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
 	sudo install -d -m 0755 /etc/apt/keyrings
 	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+	sudo rm -f /etc/apt/sources.list.d/mozilla.list
 	printf '%s\\n' \
 		'Types: deb' \
 		'URIs: https://packages.mozilla.org/apt' \
