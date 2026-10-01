@@ -212,12 +212,31 @@ gestures: # My custom gestures
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/appstream/com.gitlab.cunidev.Gestures.flatpakref
 	flatpak install flathub com.gitlab.cunidev.Gestures
 
-firefox: # Firefox without ppa
+firefox: # Firefox DEB from Mozilla APT repository (no Snap)
 # Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
-	sudo mkdir -p /etc/apt/keyrings
+	sudo install -d -m 0755 /etc/apt/keyrings
 	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-	echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-	echo -e "Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000"| sudo tee /etc/apt/preferences.d/mozilla
+	printf '%s\\n' \
+		'Types: deb' \
+		'URIs: https://packages.mozilla.org/apt' \
+		'Suites: mozilla' \
+		'Components: main' \
+		'Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc' \
+		| sudo tee /etc/apt/sources.list.d/mozilla.sources > /dev/null
+	printf '%s\\n' \
+		'Package: *' \
+		'Pin: origin packages.mozilla.org' \
+		'Pin-Priority: 1000' \
+		'' \
+		'Package: firefox' \
+		'Pin: release o=Ubuntu' \
+		'Pin-Priority: -1' \
+		| sudo tee /etc/apt/preferences.d/mozilla > /dev/null
+	@if command -v snap >/dev/null 2>&1 && snap list firefox >/dev/null 2>&1; then \
+		sudo snap remove firefox; \
+	fi
+	sudo apt-get update
+	sudo apt-get install -y firefox
 
 opera: # Opera browser via apt repository
 # Source: https://www.ubuntuupdates.org/ppa/opera

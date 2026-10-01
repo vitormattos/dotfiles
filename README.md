@@ -17,7 +17,7 @@ Use `make` without targets to list all the follow targets:
 | docker             | Setup docker                                                                                                        |
 | essentials         | Essentials binaries                                                                                                 |
 | firefox-developer  | Firefox developer edition                                                                                           |
-| firefox            | Firefox without ppa                                                                                                 |
+| firefox            | Firefox DEB from Mozilla APT repository without Snap                                                                                                 |
 | gestures           | My custom gestures                                                                                                  |
 | github-cli         | Work seamlessly with GitHub from the command line                                                                   |
 | git                | Setup git with small customizations                                                                                 |
