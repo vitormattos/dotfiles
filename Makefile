@@ -214,31 +214,15 @@ gestures: # My custom gestures
 
 firefox: # Firefox DEB from Mozilla APT repository (no Snap)
 # Source: https://support.mozilla.org/en-US/kb/install-firefox-linux#w_install-firefox-deb-package-for-debian-based-distributions
-	sudo apt-get update
-	sudo apt-get install -y wget gnupg
 	sudo install -d -m 0755 /etc/apt/keyrings
 	wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-	@fingerprint="$$(gpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk '/pub/{getline; gsub(/^ +| +$$/,""); print}')"; \
-	if [ "$$fingerprint" != "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3" ]; then \
-		echo "Mozilla repository signing key fingerprint verification failed: $$fingerprint"; \
-		exit 1; \
-	fi
-	@. /etc/os-release; \
-	if { [ "$$ID" = "ubuntu" ] && dpkg --compare-versions "$$VERSION_ID" ge "26.04"; } || \
-	   { [ "$$ID" = "debian" ] && dpkg --compare-versions "$$VERSION_ID" ge "13"; }; then \
-		printf '%s\\n' \
-			'Types: deb' \
-			'URIs: https://packages.mozilla.org/apt' \
-			'Suites: mozilla' \
-			'Components: main' \
-			'Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc' \
-			| sudo tee /etc/apt/sources.list.d/mozilla.sources > /dev/null; \
-		sudo rm -f /etc/apt/sources.list.d/mozilla.list; \
-	else \
-		echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" \
-			| sudo tee /etc/apt/sources.list.d/mozilla.list > /dev/null; \
-		sudo rm -f /etc/apt/sources.list.d/mozilla.sources; \
-	fi
+	printf '%s\\n' \
+		'Types: deb' \
+		'URIs: https://packages.mozilla.org/apt' \
+		'Suites: mozilla' \
+		'Components: main' \
+		'Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc' \
+		| sudo tee /etc/apt/sources.list.d/mozilla.sources > /dev/null
 	printf '%s\\n' \
 		'Package: *' \
 		'Pin: origin packages.mozilla.org' \
